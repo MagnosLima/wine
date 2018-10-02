@@ -13,7 +13,7 @@ use Yii;
  * @property string $access_token
  * @property string $auth_key
  */
-class User extends \yii\db\ActiveRecord
+class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
     /**
      * {@inheritdoc}
@@ -62,8 +62,34 @@ class User extends \yii\db\ActiveRecord
             'auth_key' => Yii::t('app', 'Auth Key'),
         ];
     }
+    
+    public static function findIdentity($id)
+    {
+        return static::findOne($id);
+    }
+
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+        return static::findOne(['access_token' => $token]);
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getAuthKey()
+    {
+        return $this->auth_Key;
+    }
+
+    public function validateAuthKey($authKey)
+    {
+        return $this->auth_Key === $authKey;
+    }
 
     public function validatePassword($password){
         return Yii::$app->getSecurity()->validatePassword(password, $this->password);
     }
+    
 }
