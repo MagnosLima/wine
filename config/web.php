@@ -19,6 +19,10 @@ $config = [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
+        //Classe de usuário identificação, aqui e em LoginForm
+        /*if ($this->_user === false) {
+            $this->_user = User::findIdentity($this->username);
+        }*/
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,

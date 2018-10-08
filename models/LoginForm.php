@@ -13,6 +13,7 @@ use yii\base\Model;
  */
 class LoginForm extends Model
 {
+    //Formulário que recebe dados de login da visão 
     public $username;
     public $password;
     public $rememberMe = true;
@@ -48,7 +49,7 @@ class LoginForm extends Model
             $user = $this->getUser();
 
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect username or password.');
+                $this->addError($attribute, Yii::t('app','Incorrect username or password.'));
             }
         }
     }
@@ -73,7 +74,7 @@ class LoginForm extends Model
     public function getUser()
     {
         if ($this->_user === false) {
-            $this->_user = User::findByUsername($this->username);
+            $this->_user = User::findIdentity($this->username);
         }
 
         return $this->_user;

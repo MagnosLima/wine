@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use Yii;
+use yii\helpers\Url;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
@@ -34,6 +35,10 @@ class SiteController extends Controller
                 'actions' => [
                     'logout' => ['post'],
                 ],
+            ],
+            'https' => [
+                'class' => HttpsFilter::className(), 
+                'only' => ['login'],
             ],
         ];
     }
@@ -71,6 +76,7 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
+
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
