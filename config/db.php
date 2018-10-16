@@ -6,7 +6,8 @@ return [
     'username' => 'root',
     'password' => 'root',
     'charset' => 'utf8',
-
+	
+    //Db config
     // Schema cache options (for production environment)
     //'enableSchemaCache' => true,
     //'schemaCacheDuration' => 60,
