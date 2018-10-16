@@ -65,7 +65,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     
     public static function findIdentity($id)
     {
-        return static::findOne($id);
+        return static::findOne(['username'=>$id]);
     }
 
     public static function findIdentityByAccessToken($token, $type = null)
@@ -80,16 +80,16 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
     public function getAuthKey()
     {
-        return $this->auth_Key;
+        return $this->auth_key;
     }
 
     public function validateAuthKey($authKey)
     {
-        return $this->auth_Key === $authKey;
+        return $this->auth_key === $authKey;
     }
 
     public function validatePassword($password){
-        return Yii::$app->getSecurity()->validatePassword(password, $this->password);
+        return Yii::$app->getSecurity()->validatePassword($password, $this->password);
     }
     
 }

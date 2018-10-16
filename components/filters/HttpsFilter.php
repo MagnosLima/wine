@@ -11,10 +11,13 @@ class HttpsFilter extends ActionFilter {
 	* @param yii\base\Action $action ação que está sendo executada
 	* @return boolean
 	*/
-	public function boolean beforeAction ( $action ) {
-		if(!Yii::$app->request->isSecureConnection) {
-			$acaoMontada = $action->controller-> .'/'.$action->id;
-            return $this->redirect(Url::toRoute($acaoMontada,'https'));
+	public function beforeAction ( $action ) {
+		if(!YII_ENV_DEV && !Yii::$app->request->isSecureConnection) {
+			$acaoMontada = $action->controller->id .'/'.$action->id;
+            $action->controller->redirect(Url::toRoute($acaoMontada,'https'));
+            return false;
         }
+
+        return parent::beforeAction($action);
 	}
 }
