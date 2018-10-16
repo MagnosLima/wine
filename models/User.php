@@ -15,6 +15,9 @@ use Yii;
  */
 class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
+    //Atributo que não vai para o banco de dados
+    public $password_repeat;
+    const SCENARIO_CADASTRO = 'cadastro';
     /**
      * {@inheritdoc}
      */
@@ -43,6 +46,9 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         return [
             [['username', 'password'], 'required'],
+            [['password_repeat'], 'required', 'on'=> [self::SCENARIO_CADASTRO]],
+            //[['password'], 'compare'],
+            [['password_repeat'], 'compare', 'compareAttribute'=>'password'],
             [['username'], 'string', 'max' => 45],
             [['password', 'access_token', 'auth_key'], 'string', 'max' => 100],
             [['username'], 'unique'],

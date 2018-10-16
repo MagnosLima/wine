@@ -65,6 +65,7 @@ class UserController extends Controller
     public function actionCreate()
     {
         $model = new User();
+        $model->setScenario(User::SCENARIO_CADASTRO);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
