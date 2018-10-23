@@ -26,7 +26,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return 'user';
     }
 
-    public function beforeSave($insert)
+    public function beforeSave( $insert )
     {
         //Ação disparada no insert ou update.
         //Fazer a mágica aqui - atributos sujos (valores alterados).
@@ -39,17 +39,40 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return parent::beforeSave($insert);
     }
 
+    public function afterSave( $insert, $changedAttributes ) {
+        if (isset($changedAttributes['type'])) {
+            $auth = Yii::$app->authManager;
+
+            //Alterar, revogar papel e depois associar papel
+            if(!$insert) {
+                $auth->revokeAll($this->id);
+            }
+
+            //Inserir, somente associar papel
+            $novoPapel = $auth->getRole($this->type);
+            $auth->assign($novoPapel,$this->id);
+        }
+
+        return parent::afterSave($insert, $changedAttributes);
+    }
+
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['username', 'password'], 'required'],
-            [['password_repeat'], 'required', 'on'=> [self::SCENARIO_CADASTRO]],
+            [['username', 'password'],'required'],
+            [['password_repeat','type'],'required', 'on'=> [self::SCENARIO_CADASTRO]],
             //[['password'], 'compare'],
             [['password_repeat'], 'compare', 'compareAttribute'=>'password'],
             [['username'], 'string', 'max' => 45],
+
+            //Tipo de usuario
+            [['type'],'string'],
+            //Enum
+            [['type'],'in','range'=>['admin','root','usuario']],
+
             [['password', 'access_token', 'auth_key'], 'string', 'max' => 100],
             [['username'], 'unique'],
         ];
