@@ -73,6 +73,7 @@ class UserController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'tipos'=>User::getTypes()
         ]);
     }
 
@@ -93,6 +94,7 @@ class UserController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'tipos'=>User::getTypes()
         ]);
     }
 

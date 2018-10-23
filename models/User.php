@@ -62,6 +62,14 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         Yii::$app->authManager->revokeAll($this->id);
     }
 
+    public static function getTypes() {
+        return [
+            'admin'=>Yii::t('app','Admin'),
+            'root'=>Yii::t('app','Root'),
+            'usuario'=>Yii::t('app','User')
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */
