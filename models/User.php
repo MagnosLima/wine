@@ -56,6 +56,12 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return parent::afterSave($insert, $changedAttributes);
     }
 
+    public function afterDelete() {
+        /*$auth = Yii::$app->authManager;        
+        $auth->revokeAll($this->id);*/
+        Yii::$app->authManager->revokeAll($this->id);
+    }
+
     /**
      * {@inheritdoc}
      */
