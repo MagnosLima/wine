@@ -40,7 +40,10 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     }
 
     public function afterSave( $insert, $changedAttributes ) {
-        if (isset($changedAttributes['type'])) {
+        Yii::trace('VALORES MODIFICADOS');
+        Yii::trace($changedAttributes);
+        if (isset($changedAttributes['type'] || $insert)) {
+            Yii::trace('Entrou no IF do isset')
             $auth = Yii::$app->authManager;
 
             //Alterar, revogar papel e depois associar papel
@@ -108,7 +111,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     
     public static function findIdentity($id)
     {
-        return static::findOne(['username'=>$id]);
+        return static::findOne(['id'=>$id]);
     }
 
     public static function findIdentityByAccessToken($token, $type = null)
@@ -118,7 +121,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
     public function getId()
     {
-        return $this->username;
+        return $this->id;
     }
 
     public function getAuthKey()
