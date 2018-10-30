@@ -20,6 +20,9 @@ class UserController extends Controller
     public function behaviors()
     {
         return [
+            'https'=> [
+                'class'=>\app\components\filters\HttpsFilter::className()
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

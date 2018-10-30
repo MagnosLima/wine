@@ -42,18 +42,18 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function afterSave( $insert, $changedAttributes ) {
         Yii::trace('VALORES MODIFICADOS');
         Yii::trace($changedAttributes);
-        if (isset($changedAttributes['type'] || $insert)) {
-            Yii::trace('Entrou no IF do isset')
+        if (isset($changedAttributes['type']) || $insert) {
+            Yii::trace('Entrou no IF do isset');
             $auth = Yii::$app->authManager;
 
             //Alterar, revogar papel e depois associar papel
             if(!$insert) {
-                $auth->revokeAll($this->id);
+                $auth->revokeAll($this->getId());
             }
 
             //Inserir, somente associar papel
             $novoPapel = $auth->getRole($this->type);
-            $auth->assign($novoPapel,$this->id);
+            $auth->assign($novoPapel,$this->getId());
         }
 
         return parent::afterSave($insert, $changedAttributes);
@@ -62,7 +62,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function afterDelete() {
         /*$auth = Yii::$app->authManager;        
         $auth->revokeAll($this->id);*/
-        Yii::$app->authManager->revokeAll($this->id);
+        Yii::$app->authManager->revokeAll($this->getId());
     }
 
     public static function getTypes() {
@@ -111,7 +111,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     
     public static function findIdentity($id)
     {
-        return static::findOne(['id'=>$id]);
+        return static::findOne(['username'=>$id]);
     }
 
     public static function findIdentityByAccessToken($token, $type = null)
@@ -121,7 +121,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
     public function getId()
     {
-        return $this->id;
+        return $this->username;
     }
 
     public function getAuthKey()

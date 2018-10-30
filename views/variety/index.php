@@ -9,6 +9,13 @@ use yii\grid\GridView;
 
 $this->title = Yii::t('app', 'Varieties');
 $this->params['breadcrumbs'][] = $this->title;
+
+$template = ' {view} ';
+
+if (\Yii::$app->user->can('varietyRW')) {
+    $template .= '{update} {delete} ';
+}
+
 ?>
 <div class="variety-index">
 
@@ -16,7 +23,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Variety'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?php
+        if (\Yii::$app->user->can('varietyRW')) {
+            echo Html::a(Yii::t('app', 'Create Variety'), ['create'], ['class' => 'btn btn-success']);   
+        }
+        //<?= Html::a(Yii::t('app', 'Create Variety'), ['create'], ['class' => 'btn btn-success'])
+         ?>
     </p>
 
     <?= GridView::widget([
@@ -28,7 +40,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'name',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn',
+            'template' => $template
+            ],
         ],
     ]); ?>
 </div>
