@@ -17,8 +17,8 @@ class AuthFilter extends ActionFilter {
 
 		$permissao = $controlador.$terminacao;
 
-		/*yii::trace()
-		yii::trace()*/
+		yii::trace(\Yii::$app->user->identity->type);
+		yii::trace($permissao);
 
 		if(!\Yii::$app->user->can($permissao)) {
 			throw new \yii\web\ForbiddenHttpException(Yii::t('app','Você não tem permissão para acessar esta página'));
