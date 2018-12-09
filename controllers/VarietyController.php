@@ -14,6 +14,7 @@ use yii\filters\VerbFilter;
  */
 class VarietyController extends Controller
 {
+    //public $layout = 'sbadmin';
     /**
      * {@inheritdoc}
      */
@@ -35,6 +36,7 @@ class VarietyController extends Controller
      */
     public function actionIndex()
     {
+        //$this->layout = 'sbadmin';
         $searchModel = new VarietySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 

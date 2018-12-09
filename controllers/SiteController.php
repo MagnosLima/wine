@@ -132,4 +132,26 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
+
+    public function actionMail()
+    {
+        //$model = User::findOne(20);
+        $usuarios = User::findAll();
+        foreach ($usuarios as $usuario) {
+            # code...
+            Yii::$app->mailer->compose('teste',[
+               'nome'=>$usuario->nome
+            ])
+            /*Yii::$app->mailer->compose('teste',[
+                //'nome' = $model->username;
+                'nome'=>'Fulano'
+            ])*/
+            ->setFrom('magnoslima@bol.com.br')
+            ->setTo('magandroid6.1@gmail.com')
+            ->setSubject('Teste envio de E-mail')
+            ->setTextBody('Estou enviando um E-mail através da aplicação')
+            ->setHtmlBody('<b>Envio de E-mail</b>')
+            ->send();
+        }
+    }
 }

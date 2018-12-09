@@ -11,6 +11,7 @@ $config = [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
+    //'layout'=>'sbadmin', //Layout para a aplilcação 
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -50,14 +51,14 @@ $config = [
             'class' => 'yii\rbac\DbManager',
         ],
         'db' => $db,
-        /*
+        
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
             ],
         ],
-        */
+        
     ],
     'params' => $params,
 ];

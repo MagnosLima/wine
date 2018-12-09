@@ -1,6 +1,14 @@
 <?php
 
 //nome: sbadmin.php
+use app\widgets\Alert;
+use yii\helpers\Html;
+use yii\helpers\Helpers;
+use yii\widgets\Breadcrumbs;
+use app\assets\SbadminAsset;
+
+SbadminAsset::register($this);
+
 ?>
 
 <?php $this->beginPage() ?>
@@ -14,8 +22,10 @@
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
-<body>
+<body id="page-top">
 <?php $this->beginBody() ?>
+
+	<!-- <a class="navbar-brand mr-1" href="index.html"><img src="<?=//Url::to("@web/sbadmin/img/logo.png")?>" alt="logo" /> -->
 
 <?= Alert::widget() ?>
         <?= $content ?>

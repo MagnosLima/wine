@@ -1,0 +1,7 @@
+ # Utilize o mod_rewrite para suporte a URL amigável
+    RewriteEngine on
+    # Se um diretório ou arquivo existe, usa a requisição diretamente
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    # Caso contrário, encaminha a requisição para index.php
+    RewriteRule . index.php
